@@ -1,0 +1,92 @@
+
+{{define "function"}} 
+{{- $f := .}}
+
+func {{.TestName}}Invalid(t *testing.T) {
+
+	{{- if .TestParameters}}
+        type args struct {
+
+		{{- range .TestParameters}}
+			{{Param .}} {{.Type}}		
+		{{- end}}
+	 }
+
+
+       test:=args{
+                //pass the parameter here
+                
+       }
+       {{- end}}
+       
+       
+       {{- with .Receiver}}
+		{{- if .IsStruct}}
+		         // Add External package name in ____
+	       	{{Receiver .}} := {{if .Type.IsStar}}&{{end}}_____.{{.Type.Value}}{}
+		{{- end}}
+	{{- end}}
+
+
+	{{- if and (not .OnlyReturnsError) (not .OnlyReturnsOneValue)}}
+		{{template "results" $f}} {{template "call" $f}}
+	{{end}}
+	{{- if  .OnlyReturnsOneValue}}
+		{{template "call" $f}}
+	{{end}}
+	{{- if .OnlyReturnsError}}
+		err:={{template "call" $f}}
+	{{end}}
+	{{if .ReturnsError}}
+		if err==nil{
+	         t.Error(err.Error())
+	        }
+	 {{end}}
+	
+      
+}
+func {{.TestName}}Valid(t *testing.T) {
+
+
+	{{- if .TestParameters}}
+        type args struct {
+
+		{{- range .TestParameters}}
+			{{Param .}} {{.Type}}		
+		{{- end}}
+	 }
+
+
+       test:=args{
+                //pass the parameter here
+                
+       }
+       {{- end}}
+       
+       {{- with .Receiver}}
+		{{- if .IsStruct}}
+		        // Add External package name in ____
+	       	{{Receiver .}} := {{if .Type.IsStar}}&{{end}}{{.Type.Value}}{}
+		{{- end}}
+	{{- end}}
+
+
+	{{- if and (not .OnlyReturnsError) (not .OnlyReturnsOneValue)}}
+		{{template "results" $f}} {{template "call" $f}}
+	{{end}}
+	{{- if  .OnlyReturnsOneValue}}
+		{{template "call" $f}}
+	{{end}}
+	{{- if .OnlyReturnsError}}
+		err:={{template "call" $f}}
+	{{end}}
+	{{if .ReturnsError}}
+		if err!=nil{
+	         t.Error(err.Error())
+	        }
+	{{end}}
+        
+ 
+}
+
+{{end}}

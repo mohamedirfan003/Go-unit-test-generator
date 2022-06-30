@@ -1,0 +1,3 @@
+{{define "call"}}{{with .Receiver}}{{if not .IsStruct}}tt.{{end}}{{Receiver .}}.{{end}}{{if not .Receiver}}{{.TemplateParams.PackageName}}.{{end}}{{.Name}}({{range $i, $el := .Parameters}}{{if $i}}, {{end}}{{if not .IsWriter}}test.{{end}}{{Param .}}{{if .Type.IsVariadic}}...{{end}}{{end}}){{end}}
+
+
