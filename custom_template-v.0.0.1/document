@@ -1,77 +1,63 @@
-Install the package github.com/cweill/gotests/... 
-Using the commands  go install  github.com/cweill/gotests/… or go get github.com/cweill/gotests/…
-In command line run the command gotests [options] PATH …  
-            By above command it can generate the go test code
-PATH represents the  source code path.
+ To Generate the Unit Test Generator Follow the steps:
+
+Installation:
+              
+         Using the commands :
+                  go install  github.com/cweill/gotests/… 
+                                       or
+                   go get github.com/cweill/gotests/… 
+           We  can install the package by the above command.
+
+Usage
+
+In the command Line, gotests  can generate Go tests for specific source files or an entire directory.
+
+gotests [options] PATH ...
+
+Path -  the path of Specific Source File.
+
+The Available Options are 
+
+       -all    		                   generate tests for all functions and methods
+
+       -excl                                regex. generate tests for functions and methods                   
+                                               that don't match. Takes precedence over -only,
+                                               -exported, and -all
+
+       -exported                          generate tests for exported functions and            
+                                                methods. Takes precedence over -only and -all
+
+       -i                                       print test inputs in error messages
+
+       -only                                  regexp. generate tests for functions and methods 
+                                                 that match only.Takes precedence over -all
+
+       -nosubtests                       disable subtest generation when >= Go 1.7
+
+       -parallel                             enable parallel subtest generation when >= Go 1.7.
+
+       -w                                      write output to (test) files instead of stdout
+
+       -template_dir                     Path to a directory containing custom test code  
+                                                 templates. Takes precedence over -template. This
+                                                 can also be set via environment variable  
+                                                 GOTESTS_TEMPLATE_DIR
+
+       -template                           Specify custom test code templates, 
+                                                  E.g. testify. This can also be set via 
+                                                  environment variable GOTESTS_TEMPLATE
+
+       -template_params_file       read external parameters to template by json 
+                                                  with file
+
+       -template_params              read external parameters to template by json 
+                                                  with stdin
 
 
- The Available Options are
-              -all    		      generate tests for all functions and methods
-
-	 -excl                  regexp. generate tests for functions and methods                   
-                              that don't match. Takes precedence over -only,
-                              -exported, and -all
-
-       -exported              generate tests for exported functions and            
-                              methods. Takes precedence over -only and -all
-
-       -i                     print test inputs in error messages
-
-       -only                  regexp. generate tests for functions and methods 
-                              that match only.Takes precedence over -all
-
-       -nosubtests            disable subtest generation when >= Go 1.7
-
-       -parallel              enable parallel subtest generation when >= Go 
-                              1.7.
-
-       -w                     write output to (test) files instead of stdout
-
-       -template_dir          Path to a directory containing custom test code  
-                              templates. Takes precedence over -template. This
-                              can also be set via environment variable  
-                              GOTESTS_TEMPLATE_DIR
-
-       -template              Specify custom test code templates, 
-                              E.g. testify. This can also be set via 
-                              environment variable GOTESTS_TEMPLATE
-
-       -template_params_file  read external parameters to template by json 
-                              with file
-
-       -template_params       read external parameters to template by json 
-                              with stdin
-
-
-We can generate the test files to specific path by using the command
-
-gotests -all -w -template_dir /home/stev/Documents/gotestTemplate  -template_params_file /home/stev/Documents/test.json   /home/stev/Documents/gotests/service/ && cd /home/stev/Documents/gotests/service/ &&  mv  *test.go  /home/stev/Documents/gotests/test/ && cd
-
-
-
- -all  		   	            - It is options in gotests for generate the code all the functions and
- -w   			            -  It is options in gotests for write the all generated code
- -template_dir		            -  It is options in gotests for path which we have customize  
-                                                  template folder  . In  Above command  
-                                                                     /home/stev/Documents/gotestTemplate  we have the customize                              
-                                                  Template folder in that directory
-                                                                                                                                                               
--template_params_file           - It is options in gotests for passing external parameters we have 
-                                                 Point out the directory where the file is.(must be json extension                 
-                                                 file) .In Above Command   /home/stev/Documents/test.json 
-                                                                     Specifies  the path of json file in that file we have field we can   
-                                                  Use that field in that customize template.
-Path[source file path]             - In Above Command the source file will be in this directory                                                            
-                                                 /home/stev/Documents/gotests/service/ where we have go file in that                 
-                                                 Go code function and method will be for that function and method   
-                                                 Will generate test according to template.
-&&                                          -  this will add the command it is in bash scrip
-cd [path generated testfile]    - In Above command  /home/stev/Documents/gotests/service/ 
-                                                                   In this location will the file will generate so that we move to that                       
-                                                Path
-&& mv *test.go                       - It will move  all the test.go file  in that folder
-
-[destination path]                  - in Above command   /home/stev/Documents/gotests/test/ 
-                                                Is the Destination path.
-cd                                         - It will come out of that directory.
-
+      Example:
+                $ gotests -only AddEmployee /home/stev/Documents/gotests/service
+                              
+                             The above command will generate unit test code for specific function
+                             We use the -only option near the function Name (AddEmployee).
+                             At Last we given the source path or directory of the go file which has the             
+                       AddEmployee function in it.
